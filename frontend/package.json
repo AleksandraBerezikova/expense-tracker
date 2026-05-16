@@ -1,0 +1,17 @@
+{
+  "name": "expense-tracker-frontend",
+  "version": "1.0.0",
+  "description": "Vanilla JS frontend for the expense tracker",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": ["**/__tests__/**/*.test.js"]
+  }
+}
