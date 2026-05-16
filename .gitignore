@@ -31,12 +31,7 @@ yarn-error.log*
 *.pem
 *.key
 
-# Terraform (for stage 4.2)
-*.tfstate
-*.tfstate.*
-.terraform/
 .terraform.lock.hcl
-terraform.tfvars
 
 # Build artifacts
 dist/
@@ -45,3 +40,20 @@ build/
 
 # Logs
 *.log
+
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+*.tfplan
+
+.terraform/
+.terraform/*
+
+terraform.tfvars
+*.auto.tfvars
+
+crash.log
+crash.*.log
+
+*.iml
