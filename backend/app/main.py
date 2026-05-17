@@ -8,6 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 from . import crud
 from .database import engine, get_session, init_db
@@ -127,5 +128,8 @@ async def health_endpoint(session: AsyncSession = Depends(get_session)) -> Healt
         return HealthResponse(status="ok", database="ok")
     except SQLAlchemyError:
         raise HTTPException(status_code=503, detail="Database unavailable")
+    
 
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+if STATIC_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")

@@ -1,4 +1,6 @@
-const API_BASE = (typeof window !== "undefined" && window.API_BASE_URL) || '';
+const API_BASE =
+    (typeof window !== "undefined" && window.API_BASE_URL) ||
+    (typeof window !== "undefined" && window.location ? window.location.origin : "http://localhost");
 
 const api = {
     buildUrl(path, params = {}) {
