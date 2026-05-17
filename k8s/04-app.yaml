@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-tracker-api
+  labels:
+    app: expense-tracker-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expense-tracker-api
+  template:
+    metadata:
+      labels:
+        app: expense-tracker-api
+    spec:
+      imagePullSecrets:
+        - name: yc-registry
+      containers:
+        - name: api
+          image: cr.yandex/crphtulkqqsqld5ekke4/expense-tracker:0.1.0
+          ports:
+            - containerPort: 8000
+              name: http
+          envFrom:
+            - secretRef:
+                name: app-config
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m      
+              memory: 128Mi
+            limits:
+              cpu: 500m 
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expense-tracker-api
+  labels:
+    app: expense-tracker-api
+spec:
+  type: ClusterIP
+  selector:
+    app: expense-tracker-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
