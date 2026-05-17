@@ -1,4 +1,4 @@
-const API_BASE = (typeof window !== "undefined" && window.API_BASE_URL) || "http://localhost:8000";
+const API_BASE = (typeof window !== "undefined" && window.API_BASE_URL) || '';
 
 const api = {
     buildUrl(path, params = {}) {

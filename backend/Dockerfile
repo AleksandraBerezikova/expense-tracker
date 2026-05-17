@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /build
 
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
 RUN pip install --prefix=/install -r requirements.txt
 
@@ -24,7 +24,8 @@ WORKDIR /app
 
 COPY --from=builder /install /usr/local
 
-COPY app ./app
+COPY backend/app/ ./app/
+COPY frontend/ ./static/
 
 USER app
 

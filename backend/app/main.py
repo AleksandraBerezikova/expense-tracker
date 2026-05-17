@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.staticfiles import StaticFiles
 
 from . import crud
 from .database import engine, get_session, init_db
@@ -126,3 +127,5 @@ async def health_endpoint(session: AsyncSession = Depends(get_session)) -> Healt
         return HealthResponse(status="ok", database="ok")
     except SQLAlchemyError:
         raise HTTPException(status_code=503, detail="Database unavailable")
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
